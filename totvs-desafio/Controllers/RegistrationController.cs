@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using totvs_desafio.Context;
 using totvs_desafio.Models;
@@ -20,6 +22,7 @@ namespace totvs_desafio.Controllers
         }
 
         [HttpGet]
+        [Produces("application/json")]
         public ActionResult<IEnumerable<User>> Get()
         {
             var userList = _context.Users;
@@ -27,13 +30,28 @@ namespace totvs_desafio.Controllers
         }
 
         [HttpPost]
-        public ActionResult<User> Post(User user)
+        [Produces("application/json")]
+        public ActionResult Post(User user)
         {
 
             if (isExistingEmail(user.email))
             {
-                StatusCode(303);
-                return new StatusCodeResult(303);
+                var Error = new Error();
+                Error.message = "Email já cadastrado";
+
+                return StatusCode(303, Error);
+            }
+
+            int workfactor = 10;
+
+            string salt = BCrypt.Net.BCrypt.GenerateSalt(workfactor);
+            string hash = BCrypt.Net.BCrypt.HashPassword(user.password, salt);
+            user.password = hash;
+
+
+            if (user.LastAccessed == null)
+            {
+                user.LastAccessed = user.created;
             }
 
             _context.Users.Add(user);
@@ -43,7 +61,7 @@ namespace totvs_desafio.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> GetUser(long id)
+        public ActionResult<User> GetUser(int id)
         {
             var user = _context.Users.Find(id);
 
@@ -57,13 +75,17 @@ namespace totvs_desafio.Controllers
 
         private bool isExistingEmail(string email)
         {
-            var user = _context.Users.Find(email);
-            if(user == null)
+            var user = _context.Users.Where(element => element.email == email).Any();
+            if (!user)
             {
                 return false;
             }
             return true;
         }
 
+        private bool PasswordCompare(string hash, string password)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, hash);
+        }
     }
 }

@@ -17,10 +17,11 @@ namespace totvs_desafio.Models
 
         [Required]
         public string password { get; set; }
+        public DateTime? LastAccessed { get; set; }
         public List<Profile>? profiles { get; set; }
         public DateTime? created { get; set; } = DateTime.Now;
         public DateTime? modified { get; set; }
-        public DateTime? LastAccessed { get; set; }
+
     }
 
 }
