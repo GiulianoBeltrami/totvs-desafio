@@ -29,13 +29,14 @@ namespace totvs_desafio
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "totvs_desafio", Version = "v1" });
             });
 
             services.AddEntityFrameworkNpgsql().AddDbContext<UserContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("postgresql")));
+
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
