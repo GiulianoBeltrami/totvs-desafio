@@ -7,9 +7,11 @@ namespace totvs_desafio.Models
 {
     public class User : IUser, IBaseEntity
     {
+        [Key]
         public int ID { get; set; }
 
         [Required]
+
         public string name { get; set; }
 
         [Required]
@@ -18,7 +20,7 @@ namespace totvs_desafio.Models
         [Required]
         public string password { get; set; }
         public DateTime? LastAccessed { get; set; }
-        public List<Profile>? profiles { get; set; }
+        public List<Profile>? profile { get; set; }
         public DateTime? created { get; set; } = DateTime.Now;
         public DateTime? modified { get; set; }
 

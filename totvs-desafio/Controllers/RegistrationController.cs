@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using totvs_desafio.Context;
+using totvs_desafio.Database;
 using totvs_desafio.Models;
 
 namespace totvs_desafio.Controllers
@@ -25,7 +26,8 @@ namespace totvs_desafio.Controllers
         [Produces("application/json")]
         public ActionResult<IEnumerable<User>> Get()
         {
-            var userList = _context.Users;
+            var dapper = new DapperQuery();
+            var userList = dapper.getAllUsers();
             return Ok(userList);
         }
 
@@ -37,7 +39,7 @@ namespace totvs_desafio.Controllers
             if (isExistingEmail(user.email))
             {
                 var Error = new Error();
-                Error.message = "Email já cadastrado";
+                Error.message = "E-mail já existente";
 
                 return StatusCode(303, Error);
             }
