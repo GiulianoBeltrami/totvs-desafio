@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using totvs_desafio.Context;
 using totvs_desafio.Database;
 using totvs_desafio.Models;
@@ -16,51 +13,55 @@ namespace totvs_desafio.Controllers
     public class RegistrationController : ControllerBase
     {
         private UserContext _context;
+        private ControllerErrors _errors;
 
-        public RegistrationController(UserContext context)
+
+        public RegistrationController(UserContext context, ControllerErrors errors)
         {
             _context = context;
+            _errors = errors;
         }
+
 
         [HttpGet]
         [Produces("application/json")]
         public ActionResult<IEnumerable<User>> Get()
         {
-            var dapper = new DapperQuery();
-            var userList = dapper.getAllUsers();
+            var userList = DapperQuery.getAllUsers();
             return Ok(userList);
         }
+
 
         [HttpPost]
         [Produces("application/json")]
         public ActionResult Post(User user)
         {
+            Validations validations = new Validations(user);
 
-            if (isExistingEmail(user.email))
+            if (!validations.isRegistrationFieldsFilled())
             {
-                var Error = new Error();
-                Error.message = "E-mail já existente";
-
-                return StatusCode(303, Error);
+                return _errors.incorrectFieldsError();
             }
 
-            int workfactor = 10;
+            if (validations.isExistingEmail())
+            {
+                return _errors.existingEmailError();
+            }
 
-            string salt = BCrypt.Net.BCrypt.GenerateSalt(workfactor);
-            string hash = BCrypt.Net.BCrypt.HashPassword(user.password, salt);
-            user.password = hash;
-
-
-            if (user.LastAccessed == null)
+            if (validations.isLastAccessedFilled())
             {
                 user.LastAccessed = user.created;
             }
+
+            Password password = new Password();
+            user.password = password.encrypt(user.password);
 
             _context.Users.Add(user);
             _context.SaveChanges();
 
             return CreatedAtAction(nameof(GetUser), new { id = user.ID }, user);
         }
+
 
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
@@ -75,19 +76,6 @@ namespace totvs_desafio.Controllers
             return Ok(user);
         }
 
-        private bool isExistingEmail(string email)
-        {
-            var user = _context.Users.Where(element => element.email == email).Any();
-            if (!user)
-            {
-                return false;
-            }
-            return true;
-        }
 
-        private bool PasswordCompare(string hash, string password)
-        {
-            return BCrypt.Net.BCrypt.Verify(password, hash);
-        }
     }
 }

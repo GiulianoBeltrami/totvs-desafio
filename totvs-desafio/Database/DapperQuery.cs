@@ -2,41 +2,79 @@
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 using totvs_desafio.Models;
 
 namespace totvs_desafio.Database
 {
-    public class DapperQuery
+    public static class DapperQuery
     {
-        private NpgsqlConnection _connection;
 
-        public DapperQuery()
+        public static List<User> getAllUsers()
         {
-            _connection = new DapperDbConnection().connect();
-        }
+            string userQuery = $"SELECT * FROM \"Users\";";
 
-        public List<User> getAllUsers()
-        {
-            string userQuery = "Select * from \"Users\";";
-
-            using (_connection)
+            using (var connection = new DapperDbConnection().connect())
             {
-                _connection.Open();
-                var allUsers = _connection.Query<User>(userQuery).ToList();
+                connection.Open();
+                var allUsers = connection.Query<User>(userQuery).ToList();
 
                 foreach (User user in allUsers)
                 {
-                    string sql = $"Select * from \"Profile\" WHERE \"ID\" = {user.ID};";
-                    var userProfile = _connection.Query<Profile>(sql).ToList();
-
-                    user.profile = userProfile;
+                    populateUserProfile(user, connection);
                 }
                 return allUsers;
             }
         }
+
+
+        public static User getUserByEmail(string email)
+        {
+            string findUserQuery = $"SELECT * FROM \"Users\" WHERE \"email\"='{email}'";
+
+            using (var connection = new DapperDbConnection().connect())
+            {
+                connection.Open();
+                var user = connection.QueryFirstOrDefault<User>(findUserQuery);
+
+                if (!isUserNull(user))
+                {
+                    populateUserProfile(user, connection);
+                }
+
+                return user;
+            }
+        }
+
+
+        public static void updateLastLogin(string email)
+        {
+            string updateQuery = $"UPDATE \"Users\" SET \"LastAccessed\" = '{DateTime.Now}' WHERE \"email\"='{email}'";
+
+            using (var connection = new DapperDbConnection().connect())
+            {
+                connection.Open();
+                connection.Query(updateQuery);
+            }
+
+        }
+
+
+        private static void populateUserProfile(User user, NpgsqlConnection connection)
+        {
+            string profileQuery = $"Select * from \"Profile\" WHERE \"ID\" = {user.ID};";
+
+            var userProfile = connection.Query<Profile>(profileQuery).ToList();
+
+            user.profile = userProfile;
+        }
+
+
+        private static bool isUserNull(User user)
+        {
+            return user == null;
+        }
+
 
     }
 }

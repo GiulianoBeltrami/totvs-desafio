@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using totvs_desafio.Interfaces;
 
 namespace totvs_desafio.Models
@@ -10,8 +11,6 @@ namespace totvs_desafio.Models
         [Key]
         public int ID { get; set; }
 
-        [Required]
-
         public string name { get; set; }
 
         [Required]
@@ -20,6 +19,8 @@ namespace totvs_desafio.Models
         [Required]
         public string password { get; set; }
         public DateTime? LastAccessed { get; set; }
+
+        [ForeignKey("ID")]
         public List<Profile>? profile { get; set; }
         public DateTime? created { get; set; } = DateTime.Now;
         public DateTime? modified { get; set; }

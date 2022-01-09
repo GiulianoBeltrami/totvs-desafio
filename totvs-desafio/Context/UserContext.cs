@@ -9,7 +9,7 @@ namespace totvs_desafio.Context
 {
     public class UserContext : DbContext
     {
-        public UserContext(DbContextOptions<UserContext> options): base(options)
+        public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
         }
         public DbSet<User> Users { get; set; }
@@ -17,7 +17,7 @@ namespace totvs_desafio.Context
         public override int SaveChanges()
         {
             var entries = ChangeTracker.Entries()
-                            .Where(property => property.Entity is IBaseEntity && (property.State == EntityState.Added|| property.State == EntityState.Modified));
+                            .Where(property => property.Entity is IBaseEntity && (property.State == EntityState.Added || property.State == EntityState.Modified));
 
             foreach (var entityEntry in entries)
             {

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using totvs_desafio.Context;
 using totvs_desafio.Database;
+using totvs_desafio.Models;
 
 namespace totvs_desafio
 {
@@ -20,7 +21,6 @@ namespace totvs_desafio
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -30,11 +30,10 @@ namespace totvs_desafio
             });
 
             services.AddEntityFrameworkNpgsql().AddDbContext<UserContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("postgresql")));
-
+            services.AddSingleton<ControllerErrors, ControllerErrors>();
             services.AddControllers().AddNewtonsoftJson();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

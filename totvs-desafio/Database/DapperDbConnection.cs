@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Npgsql;
-using System.Data.SqlClient;
 
 namespace totvs_desafio.Database
 {

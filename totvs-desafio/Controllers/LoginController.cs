@@ -1,87 +1,56 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using totvs_desafio.Database;
+using totvs_desafio.Models;
 
 namespace totvs_desafio.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class LoginController : Controller
     {
-        // GET: LoginController
-        public ActionResult Index()
+
+        private ControllerErrors _errors;
+
+        public LoginController(ControllerErrors errors)
         {
-            return View();
+            _errors = errors;
         }
 
-        // GET: LoginController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: LoginController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: LoginController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [Produces("application/json")]
+        public ActionResult Login(User user)
         {
-            try
+            Validations validations = new Validations(user);
+
+            if (!validations.isLoginFieldsFilled())
             {
-                return RedirectToAction(nameof(Index));
+                return _errors.incorrectFieldsError();
             }
-            catch
+
+            User searchedUser = DapperQuery.getUserByEmail(user.email);
+
+            if (searchedUser == null)
             {
-                return View();
+                return _errors.incorrectUserEmailError();
             }
+
+            Password password = new Password();
+            var isPasswordCorrect = password.compare(searchedUser.password, user.password);
+
+            if (isPasswordCorrect)
+            {
+                DapperQuery.updateLastLogin(searchedUser.email);
+                User userUpdated = DapperQuery.getUserByEmail(searchedUser.email);
+                return Ok(userUpdated);
+            }
+            else
+            {
+                return _errors.incorrectUserCredentialsError();
+            }
+
         }
 
-        // GET: LoginController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: LoginController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: LoginController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: LoginController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
