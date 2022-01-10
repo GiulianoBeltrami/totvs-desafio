@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using totvs_desafio.Interfaces;
 
 namespace totvs_desafio.Models
 {
@@ -7,37 +9,37 @@ namespace totvs_desafio.Models
         public string message { get; set; }
     }
 
-    public class ControllerErrors : ControllerBase
+    public class ControllerErrors : ControllerBase, IControllerErrors
     {
-        public ActionResult existingEmailError()
+        public ObjectResult existingEmailError()
         {
             var Error = new Error();
             Error.message = "E-mail já existente";
-            return StatusCode(303, Error);
+            return StatusCode((int)HttpStatusCode.Conflict, Error);
         }
 
 
-        public ActionResult incorrectFieldsError()
+        public ObjectResult incorrectFieldsError()
         {
             var Error = new Error();
             Error.message = "Preencha os campos corretamente";
-            return StatusCode(400, Error);
+            return StatusCode((int)HttpStatusCode.BadRequest, Error);
         }
 
 
-        public ActionResult incorrectUserEmailError()
+        public ObjectResult incorrectUserEmailError()
         {
             var Error = new Error();
             Error.message = "Usuário e/ou senha inválidos";
-            return StatusCode(404, Error);
+            return StatusCode((int)HttpStatusCode.NotFound, Error);
         }
 
 
-        public ActionResult incorrectUserCredentialsError()
+        public ObjectResult incorrectUserCredentialsError()
         {
             var Error = new Error();
             Error.message = "Usuário e/ou senha inválidos";
-            return StatusCode(401, Error);
+            return StatusCode((int)HttpStatusCode.Unauthorized, Error);
         }
     }
 

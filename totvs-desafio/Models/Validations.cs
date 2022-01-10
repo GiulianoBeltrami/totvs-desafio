@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using totvs_desafio.Database;
+﻿using totvs_desafio.Database;
 
 namespace totvs_desafio.Models
 {

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "totvs-desafio", "totvs-desafio\totvs-desafio.csproj", "{67041651-4F39-447C-8F14-D19DE65DD6A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "totvs-desafio", "totvs-desafio\totvs-desafio.csproj", "{67041651-4F39-447C-8F14-D19DE65DD6A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "totvs-desafio.integration_tests", "totvs-desafio.integration_tests\totvs-desafio.integration_tests.csproj", "{F01D4A0B-48C8-4FA9-80A7-CEA700BAF45E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "totvs-desafio.unit_tests", "totvs-desafio.unit_tests\totvs-desafio.unit_tests.csproj", "{D80061BA-5318-4222-8C2E-BF53E38E134E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{67041651-4F39-447C-8F14-D19DE65DD6A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67041651-4F39-447C-8F14-D19DE65DD6A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67041651-4F39-447C-8F14-D19DE65DD6A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F01D4A0B-48C8-4FA9-80A7-CEA700BAF45E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F01D4A0B-48C8-4FA9-80A7-CEA700BAF45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F01D4A0B-48C8-4FA9-80A7-CEA700BAF45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F01D4A0B-48C8-4FA9-80A7-CEA700BAF45E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D80061BA-5318-4222-8C2E-BF53E38E134E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D80061BA-5318-4222-8C2E-BF53E38E134E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D80061BA-5318-4222-8C2E-BF53E38E134E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D80061BA-5318-4222-8C2E-BF53E38E134E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

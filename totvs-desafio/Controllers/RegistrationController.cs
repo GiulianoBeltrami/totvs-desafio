@@ -34,7 +34,7 @@ namespace totvs_desafio.Controllers
 
         [HttpPost]
         [Produces("application/json")]
-        public ActionResult Post(User user)
+        public ActionResult<User> Post(User user)
         {
             Validations validations = new Validations(user);
 
@@ -48,7 +48,7 @@ namespace totvs_desafio.Controllers
                 return _errors.existingEmailError();
             }
 
-            if (validations.isLastAccessedFilled())
+            if (!validations.isLastAccessedFilled())
             {
                 user.LastAccessed = user.created;
             }
