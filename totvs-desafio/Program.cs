@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading;
 using totvs_desafio.Context;
 using totvs_desafio.Models;
 
@@ -34,8 +35,11 @@ namespace totvs_desafio
                 var services = scope.ServiceProvider;
                 try
                 {
+                    Thread.Sleep(2000);
                     var context = services.GetRequiredService<UserContext>();
                     context.Database.EnsureCreated();
+                    
+
                 }
                 catch (Exception ex)
                 {
@@ -44,6 +48,7 @@ namespace totvs_desafio
                 }
             }
         }
+
 
     }
 }

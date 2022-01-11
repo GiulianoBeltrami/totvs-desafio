@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 32411680
+      POSTGRES_USER: postgres
+      POSTGRES_DB: totvs-desafio
+    ports:
+      - "5433:5432"
+  app:
+    build: .
+    depends_on:
+      - postgres
