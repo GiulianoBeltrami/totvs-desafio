@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using totvs_desafio.Context;
+using totvs_desafio.Models;
 
 namespace totvs_desafio
 {
@@ -42,5 +44,6 @@ namespace totvs_desafio
                 }
             }
         }
+
     }
 }

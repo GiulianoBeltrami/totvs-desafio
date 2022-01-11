@@ -62,7 +62,7 @@ namespace totvs_desafio.Database
 
         private static void populateUserProfile(User user, NpgsqlConnection connection)
         {
-            string profileQuery = $"Select * from \"Profile\" WHERE \"ID\" = {user.ID};";
+            string profileQuery = $"Select * from \"Profiles\" WHERE \"UserID\" = {user.ID};";
 
             var userProfile = connection.Query<Profile>(profileQuery).ToList();
 

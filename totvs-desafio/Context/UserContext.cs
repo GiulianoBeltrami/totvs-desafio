@@ -13,6 +13,7 @@ namespace totvs_desafio.Context
         {
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
 
         public override int SaveChanges()
         {

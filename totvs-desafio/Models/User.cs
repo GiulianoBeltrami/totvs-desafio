@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using totvs_desafio.Interfaces;
 
 namespace totvs_desafio.Models
@@ -20,7 +22,6 @@ namespace totvs_desafio.Models
         public string password { get; set; }
         public DateTime? LastAccessed { get; set; }
 
-        [ForeignKey("ID")]
         public List<Profile>? profile { get; set; }
         public DateTime? created { get; set; } = DateTime.Now;
         public DateTime? modified { get; set; }

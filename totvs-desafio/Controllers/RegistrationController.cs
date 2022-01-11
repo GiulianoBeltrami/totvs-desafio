@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using totvs_desafio.Context;
 using totvs_desafio.Database;
 using totvs_desafio.Models;
@@ -21,7 +22,6 @@ namespace totvs_desafio.Controllers
             _context = context;
             _errors = errors;
         }
-
 
         [HttpGet]
         [Produces("application/json")]
@@ -59,23 +59,7 @@ namespace totvs_desafio.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.ID }, user);
+            return StatusCode((int)HttpStatusCode.Created, user);
         }
-
-
-        [HttpGet("{id}")]
-        public ActionResult<User> GetUser(int id)
-        {
-            var user = _context.Users.Find(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
-
-
     }
 }
