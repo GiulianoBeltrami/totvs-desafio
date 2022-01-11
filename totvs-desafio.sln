@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "totvs-desafio.integration_t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "totvs-desafio.unit_tests", "totvs-desafio.unit_tests\totvs-desafio.unit_tests.csproj", "{D80061BA-5318-4222-8C2E-BF53E38E134E}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{137788CC-2E85-48AF-9C37-D2A40B2D9CB3}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FA640953-0422-40EC-A41B-5D05C0060C87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{D80061BA-5318-4222-8C2E-BF53E38E134E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D80061BA-5318-4222-8C2E-BF53E38E134E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D80061BA-5318-4222-8C2E-BF53E38E134E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{137788CC-2E85-48AF-9C37-D2A40B2D9CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{137788CC-2E85-48AF-9C37-D2A40B2D9CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{137788CC-2E85-48AF-9C37-D2A40B2D9CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{137788CC-2E85-48AF-9C37-D2A40B2D9CB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA640953-0422-40EC-A41B-5D05C0060C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA640953-0422-40EC-A41B-5D05C0060C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA640953-0422-40EC-A41B-5D05C0060C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA640953-0422-40EC-A41B-5D05C0060C87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

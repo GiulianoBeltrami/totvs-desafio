@@ -27,7 +27,7 @@ namespace totvs_desafio_integration_tests.Controllers_tests
 
             var response = await _testClient.GetAsync("/api/Registration");
 
-            Assert.Null(response.);
+            Assert.Null(response);
         }
     }
 }

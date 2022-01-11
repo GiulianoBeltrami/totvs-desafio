@@ -11,7 +11,7 @@ namespace totvs_desafio.Models
     public class User : IUser, IBaseEntity
     {
         [Key]
-        public int ID { get; set; }
+        public Guid ID { get; set; }
 
         public string name { get; set; }
 

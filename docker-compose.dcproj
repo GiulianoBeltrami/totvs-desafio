@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>137788cc-2e85-48af-9c37-d2a40b2d9cb3</ProjectGuid>
+    <ProjectGuid>fa640953-0422-40ec-a41b-5d05c0060c87</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>totvs-desafio</DockerServiceName>

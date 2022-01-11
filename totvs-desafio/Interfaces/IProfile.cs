@@ -1,19 +1,18 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using totvs_desafio.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using totvs_desafio.Models;
 
-namespace totvs_desafio.Models
+namespace totvs_desafio.Interfaces
 {
-    public class Profile: IProfile
+    public interface IProfile
     {
-        [Key]
         public Guid ID { get; set; }
 
         public User User { get; set; }
-        [ForeignKey("ID")]
         public Guid UserID { get; set; }
-        
+
         public string? age { get; set; }
         public string? address { get; set; }
 
