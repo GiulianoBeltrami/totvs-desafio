@@ -12,12 +12,12 @@ namespace totvs_desafio.Database
 
         public static List<User> getAllUsers()
         {
-            string userQuery = $"SELECT * FROM \"Users\";";
+            string getUsersQuery = $"SELECT * FROM \"Users\";";
 
             using (var connection = new DapperDbConnection().connect())
             {
                 connection.Open();
-                var allUsers = connection.Query<User>(userQuery).ToList();
+                var allUsers = connection.Query<User>(getUsersQuery).ToList();
 
                 foreach (User user in allUsers)
                 {
@@ -49,6 +49,7 @@ namespace totvs_desafio.Database
 
         public static void updateLastLogin(string email)
         {
+
             string updateQuery = $"UPDATE \"Users\" SET \"LastAccessed\" = '{DateTime.Now}' WHERE \"email\"='{email}'";
 
             using (var connection = new DapperDbConnection().connect())
@@ -62,7 +63,7 @@ namespace totvs_desafio.Database
 
         private static void populateUserProfile(User user, NpgsqlConnection connection)
         {
-            string profileQuery = $"Select * from \"Profiles\" WHERE \"UserID\" = '{user.ID}';";
+            string profileQuery = $"SELECT p.\"ID\", p.profession, p.interests FROM \"Profiles\" p JOIN \"ProfileUser\" x ON p.\"ID\" = x.\"profileID\" JOIN \"Users\" t ON x.\"UserID\" = t.\"ID\" WHERE t.\"ID\" = '{user.ID}';";
 
             var userProfile = connection.Query<Profile>(profileQuery).ToList();
 

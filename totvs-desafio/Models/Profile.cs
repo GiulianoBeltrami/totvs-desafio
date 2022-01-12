@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using totvs_desafio.Interfaces;
@@ -10,15 +12,11 @@ namespace totvs_desafio.Models
         [Key]
         public Guid ID { get; set; }
 
-        public User User { get; set; }
-        [ForeignKey("ID")]
-        public Guid UserID { get; set; }
-        
-        public string? age { get; set; }
-        public string? address { get; set; }
+        public ICollection<User>? User { get; set; }
 
-        public string? cpf { get; set; }
+        public string? profession { get; set; }
 
-        public string? rg { get; set; }
+        public string? interests { get; set; }
+
     }
 }

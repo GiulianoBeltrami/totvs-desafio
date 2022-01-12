@@ -10,14 +10,10 @@ namespace totvs_desafio.Interfaces
     {
         public Guid ID { get; set; }
 
-        public User User { get; set; }
-        public Guid UserID { get; set; }
+        public ICollection<User>? User { get; set; }
 
-        public string? age { get; set; }
-        public string? address { get; set; }
+        public string? profession { get; set; }
 
-        public string? cpf { get; set; }
-
-        public string? rg { get; set; }
+        public string? interests { get; set; }
     }
 }

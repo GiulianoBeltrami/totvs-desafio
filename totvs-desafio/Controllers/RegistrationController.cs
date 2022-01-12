@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using totvs_desafio.Context;
@@ -10,7 +12,7 @@ using totvs_desafio.Models;
 namespace totvs_desafio.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/registration")]
     public class RegistrationController : ControllerBase
     {
         private UserContext _context;
@@ -25,18 +27,22 @@ namespace totvs_desafio.Controllers
 
         [HttpGet]
         [Produces("application/json")]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<User>> GetAll()
         {
             var userList = DapperQuery.getAllUsers();
-            return Ok(userList);
+
+            return Ok(new { 
+                users = userList
+            });
         }
 
 
         [HttpPost]
         [Produces("application/json")]
-        public ActionResult<User> Post(User user)
+        public ActionResult<User> Registration([FromBody] User user)
         {
             Validations validations = new Validations(user);
+
 
             if (!validations.isRegistrationFieldsFilled())
             {
@@ -59,7 +65,10 @@ namespace totvs_desafio.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return StatusCode((int)HttpStatusCode.Created, user);
+            return StatusCode((int)HttpStatusCode.Created, new { 
+                user = user
+            });
         }
+
     }
 }

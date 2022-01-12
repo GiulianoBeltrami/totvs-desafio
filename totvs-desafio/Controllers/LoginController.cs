@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using totvs_desafio.Database;
 using totvs_desafio.Models;
+using totvs_desafio.Services;
 
 namespace totvs_desafio.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/login")]
     public class LoginController : Controller
     {
 
@@ -18,7 +19,7 @@ namespace totvs_desafio.Controllers
 
         [HttpPost]
         [Produces("application/json")]
-        public ActionResult Login(User user)
+        public ActionResult Login([FromBody] User user)
         {
             Validations validations = new Validations(user);
 
@@ -39,9 +40,15 @@ namespace totvs_desafio.Controllers
 
             if (isPasswordCorrect)
             {
-                DapperQuery.updateLastLogin(searchedUser.email);
-                User userUpdated = DapperQuery.getUserByEmail(searchedUser.email);
-                return Ok(userUpdated);
+                var tokenString = TokenService.GenerateToken(user);
+
+                var userUpdated = UpdateLastLoginAndUser(user);
+
+                return Ok(new 
+                { 
+                    user = userUpdated,
+                    token = tokenString
+                });
             }
             else
             {
@@ -50,7 +57,12 @@ namespace totvs_desafio.Controllers
 
         }
 
-
+        private User UpdateLastLoginAndUser(User user)
+        {
+            DapperQuery.updateLastLogin(user.email);
+            User userUpdated = DapperQuery.getUserByEmail(user.email);
+            return userUpdated;
+        }
 
     }
 }
