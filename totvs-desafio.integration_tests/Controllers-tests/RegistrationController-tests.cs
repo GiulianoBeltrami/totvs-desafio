@@ -9,28 +9,28 @@ using Xunit;
 
 namespace totvs_desafio_integration_tests.Controllers_tests
 {
-    public class RegistrationControllerTests : TestFixture
+    public class RegistrationControllerTests : IClassFixture<TestFixture>
     {
-        //[Fact]
-        //public async Task Get_ShouldReturnEmptyAllUsers()
-        //{
-        //    var user = new User();
-        //    user.email = "teste@teste.com";
-        //    user.name = "teste";
+        [Fact]
+        public async Task Get_ShouldReturnEmptyAllUsers()
+        {
+            var user = new User();
+            user.email = "teste@teste.com";
+            user.name = "teste";
 
-        //    var profile = new List<Profile>();
-        //    profile.Add(new Profile() { address = "paulista", age = "12", rg = "123", cpf = "321" });
+            var profile = new List<Profile>();
+            profile.Add(new Profile() { profession="developer", interests="airplane" });
 
-        //    user.profile = profile;
-        //    user.password = "123";
+            user.profile = profile;
+            user.password = "123";
 
-        //    var stringContent = new StringContent(JsonConvert.SerializeObject(user));
-        //    await _testClient.PostAsync("/api/Registration", stringContent);
+            var stringContent = new StringContent(JsonConvert.SerializeObject(user));
+            await _testClient.PostAsync("/api/registration", stringContent);
 
-        //    var response = await _testClient.GetAsync("/api/Registration");
+            var response = await _testClient.GetAsync("/api/registration");
 
-        //    Assert.Null(response);
-        //}
+            Assert.Null(response);
+        }
 
         //[Fact]
         //public async Task Post_ShouldReturnUserCreated()
